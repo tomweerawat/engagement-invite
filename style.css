@@ -1,0 +1,197 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffffff 0%, #cfdbce 100%);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    perspective: 1200px;
+}
+
+/* Card Wrapper */
+.card-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    aspect-ratio: 2 / 3;
+    cursor: pointer;
+}
+
+/* Card Background (Front Cover) */
+.card-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.card-background .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 3D Card Container */
+.card-3d-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Door Styles */
+.door {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.door-left {
+    left: 0;
+    border-radius: 8px 0 0 8px;
+}
+
+.door-right {
+    right: 0;
+    border-radius: 0 8px 8px 0;
+    transform-origin: right center;
+}
+
+.door-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Doors Open Animation */
+.card-3d-container.opened .door-left {
+    transform: rotateY(-90deg);
+}
+
+.card-3d-container.opened .door-right {
+    transform: rotateY(90deg);
+}
+
+/* Inside Card */
+.card-inside {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.4s;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-3d-container.opened .card-inside {
+    opacity: 1;
+}
+
+.card-inside .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Tap Prompt */
+.tap-prompt {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease 0.6s;
+    pointer-events: none;
+}
+
+.tap-prompt p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.card-3d-container.opened ~ .tap-prompt {
+    opacity: 0;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-wrapper {
+        width: 95%;
+        max-width: 100%;
+    }
+
+    .tap-prompt p {
+        font-size: 12px;
+    }
+}
+
+@media (max-height: 600px) {
+    .container {
+        height: 100vh;
+    }
+
+    .card-wrapper {
+        width: 85%;
+    }
+
+    .tap-prompt {
+        bottom: -45px;
+    }
+}
+
+/* No Selection on Cards */
+.card-wrapper {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    touch-action: none;
+}
