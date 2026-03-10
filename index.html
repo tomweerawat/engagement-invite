@@ -7,15 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Petal Container (fullscreen behind everything) -->
+    <div class="petals-container" id="petalsContainer"></div>
+
     <div class="container">
         <div class="card-wrapper">
-            <!-- Background (Front Cover) -->
-            <div class="card-background">
-                <img src="images/3.png" alt="Front Cover" class="card-image">
-            </div>
 
             <!-- 3D Card Container with Doors -->
-            <div class="card-3d-container">
+            <div class="card-3d-container" id="card3d">
                 <!-- Left Door -->
                 <div class="door door-left">
                     <img src="images/1.png" alt="Left Door" class="door-image">
@@ -26,16 +25,37 @@
                     <img src="images/2.png" alt="Right Door" class="door-image">
                 </div>
 
-                <!-- Inside Card (Hidden initially, shown after doors open) -->
-                <div class="card-inside">
-                    <img src="images/4.png" alt="Inside Card" class="card-image">
+                <!-- Flip Card (shown after doors open) -->
+                <div class="flip-card" id="flipCard">
+                    <div class="flip-card-inner" id="flipCardInner">
+                        <!-- Front: 3.png -->
+                        <div class="flip-card-front">
+                            <img src="images/3.png" alt="Front Card" class="card-image">
+                            <!-- Sparkles -->
+                            <div class="sparkles" id="sparklesFront"></div>
+                        </div>
+                        <!-- Back: 4.png -->
+                        <div class="flip-card-back">
+                            <img src="images/4.png" alt="Back Card" class="card-image">
+                            <!-- Sparkles -->
+                            <div class="sparkles" id="sparklesBack"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Tap Prompt -->
-            <div class="tap-prompt">
-                <p>Click or Tap to Open</p>
+            <!-- Hint shown after doors open -->
+            <div class="flip-hint" id="flipHint">
+                <span class="hint-icon">👆</span>
+                <span class="hint-text">แตะเพื่อดูรายละเอียด</span>
             </div>
+
+            <!-- Hint when viewing back -->
+            <div class="flip-hint flip-hint-back" id="flipHintBack">
+                <span class="hint-icon">👆</span>
+                <span class="hint-text">แตะเพื่อกลับด้านการ์ด</span>
+            </div>
+
         </div>
     </div>
 
