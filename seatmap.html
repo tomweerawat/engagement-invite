@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Seating Map — Capella Bangkok</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ================================================================
+       DESIGN TOKENS
+    ================================================================ */
+    :root {
+      --gold:          #C9A84C;
+      --gold-light:    #E8D5A3;
+      --gold-lighter:  #F5EDD0;
+      --gold-dark:     #A07830;
+      --gold-vip:      #B89000;
+      --cream:         #FAF7F0;
+      --cream-mid:     #F2E8D4;
+      --white:         #FFFFFF;
+      --text-dark:     #2C2517;
+      --text-mid:      #6B5B3E;
+      --text-light:    #9C8A6A;
+      --border:        rgba(201, 168, 76, 0.32);
+      --shadow-sm:     0 2px 12px rgba(140, 100, 30, 0.09);
+      --shadow-md:     0 8px 32px rgba(140, 100, 30, 0.14);
+      --shadow-lg:     0 16px 48px rgba(140, 100, 30, 0.20);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      background-image:
+        radial-gradient(ellipse at 15% 10%, rgba(201, 168, 76, 0.06) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(201, 168, 76, 0.06) 0%, transparent 55%);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* ================================================================
+       HEADER
+    ================================================================ */
+    .site-header {
+      text-align: center;
+      padding: 64px 24px 44px;
+    }
+
+    .header-ornament {
+      font-size: 13px;
+      letter-spacing: 18px;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .site-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      letter-spacing: 0.07em;
+      color: var(--text-dark);
+      line-height: 1.1;
+    }
+
+    .venue-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--gold-dark);
+      margin-top: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    .header-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 26px auto 0;
+      max-width: 300px;
+    }
+    .header-rule .gem { color: var(--gold); font-size: 11px; opacity: 0.7; }
+    .header-rule::before,
+    .header-rule::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+    }
+    .header-rule::before { background: linear-gradient(to right, transparent, var(--gold)); }
+    .header-rule::after  { background: linear-gradient(to left,  transparent, var(--gold)); }
+
+    /* ================================================================
+       SEARCH
+    ================================================================ */
+    .search-section {
+      max-width: 440px;
+      margin: 40px auto 0;
+      padding: 0 20px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      width: 16px;
+      height: 16px;
+      color: var(--gold);
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 13px 44px 13px 46px;
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      background: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      box-shadow: var(--shadow-sm);
+      letter-spacing: 0.03em;
+    }
+    #searchInput::placeholder { color: var(--text-light); }
+    #searchInput:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.13), var(--shadow-sm);
+    }
+
+    #clearBtn {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 6px 8px;
+      border-radius: 50%;
+      transition: color 0.2s, background 0.2s;
+      display: none;
+      line-height: 1;
+    }
+    #clearBtn.show { display: inline-flex; align-items: center; justify-content: center; }
+    #clearBtn:hover { color: var(--gold-dark); background: var(--gold-lighter); }
+
+    #searchResult {
+      text-align: center;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--gold-dark);
+      min-height: 22px;
+      margin-top: 10px;
+      font-weight: 400;
+    }
+    #searchResult.not-found { color: #AA4040; }
+
+    /* ================================================================
+       LEGEND
+    ================================================================ */
+    .legend {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px 28px;
+      margin: 32px auto 0;
+      padding: 0 24px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--text-mid);
+      letter-spacing: 0.05em;
+    }
+    .legend-pill {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      border: 1.5px solid;
+      display: inline-block;
+    }
+    .legend-pill.regular { background: var(--white); border-color: var(--border); }
+    .legend-pill.vip     { background: linear-gradient(135deg, #FFF4CC, #FFE580); border-color: var(--gold-vip); }
+    .legend-pill.found   { background: var(--gold); border-color: var(--gold-dark); }
+
+    /* ================================================================
+       SECTION DIVIDER
+    ================================================================ */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      max-width: 340px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    .divider-line       { flex: 1; height: 1px; }
+    .divider-line.left  { background: linear-gradient(to right, transparent, var(--border)); }
+    .divider-line.right { background: linear-gradient(to left,  transparent, var(--border)); }
+    .divider-gem        { color: var(--gold); font-size: 11px; opacity: 0.7; }
+
+    /* ================================================================
+       TABLES GRID
+    ================================================================ */
+    .tables-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    #tablesGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 44px;
+      justify-items: center;
+    }
+
+    /* ================================================================
+       TABLE CARD
+    ================================================================ */
+    .table-card {
+      position: relative;
+      overflow: visible;
+      animation: fadeInUp 0.52s ease both;
+      /* JS sets width/height and animation-delay */
+    }
+
+    /* ================================================================
+       TABLE CIRCLE  (central disc)
+    ================================================================ */
+    .table-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 34%, #FFFFFF 35%, #FAF4E5 100%);
+      border: 2px solid var(--gold);
+      box-shadow:
+        0 0 0 7px rgba(201, 168, 76, 0.06),
+        var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 2;
+      transition: box-shadow 0.4s ease;
+    }
+
+    /* VIP table (Tables 1–8) */
+    .table-card.vip-table .table-circle,
+    .table-circle.vip-table-circle {
+      background: radial-gradient(circle at 38% 34%, #FFFBEF 30%, #FFF3C4 100%);
+      border: 2.5px solid var(--gold-vip);
+      box-shadow:
+        0 0 0 8px rgba(184, 144, 0, 0.10),
+        0 8px 32px rgba(184, 144, 0, 0.22);
+    }
+    .table-card.vip-table .table-num { color: var(--gold-dark); }
+    .table-name-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: var(--gold-dark);
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+      padding: 0 6px;
+      max-width: 130px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+    .table-card.vip-table .table-name-label { color: var(--gold-vip); font-weight: 600; }
+    .table-card.vip-table .table-mini-rule  { background: var(--gold-vip); }
+    /* VIP table badge */
+    .table-card.vip-table .table-circle::after {
+      content: '★ VIP';
+      position: absolute;
+      top: -11px;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--gold-vip);
+      padding: 2px 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(184, 144, 0, 0.40);
+    }
+
+    .table-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      color: var(--text-dark);
+      line-height: 1;
+    }
+
+    .table-mini-rule {
+      width: 22px;
+      height: 1px;
+      background: var(--gold-light);
+      margin: 6px auto;
+    }
+
+    .table-count {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: var(--text-light);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .table-card.highlighted .table-circle {
+      animation: tableGlow 2s ease-in-out infinite;
+    }
+
+    /* ================================================================
+       SEAT CONNECTOR LINES  (drawn in SVG overlay)
+    ================================================================ */
+    .seat-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ================================================================
+       SEAT LABELS
+    ================================================================ */
+    .seat {
+      position: absolute;
+      z-index: 3;
+      transform: translate(-50%, -50%);
+    }
+
+    .seat-pill {
+      display: block;
+      padding: 4px 9px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.62rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      max-width: 76px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.22s, border-color 0.22s, box-shadow 0.22s, transform 0.22s, color 0.22s;
+      cursor: default;
+      user-select: none;
+    }
+
+    .seat:hover .seat-pill {
+      background: var(--gold-lighter);
+      border-color: var(--gold);
+      color: var(--text-dark);
+      box-shadow: 0 4px 16px rgba(140, 100, 30, 0.22);
+      transform: scale(1.10);
+    }
+
+    /* VIP seat */
+    .seat.vip .seat-pill {
+      background: linear-gradient(135deg, #FFF6CC 0%, #FFE166 100%);
+      border-color: var(--gold-vip);
+      color: #5C3D00;
+      font-weight: 600;
+    }
+    .seat.vip::before {
+      content: '★';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      color: var(--gold-vip);
+      z-index: 5;
+      line-height: 1;
+      text-shadow: 0 1px 4px rgba(184, 144, 0, 0.5);
+    }
+
+    /* Found / highlighted seat */
+    .seat.found .seat-pill {
+      background: var(--gold) !important;
+      border-color: var(--gold-dark) !important;
+      color: var(--white) !important;
+      font-weight: 600 !important;
+      box-shadow: 0 4px 18px rgba(160, 120, 40, 0.50);
+      animation: seatPulse 1.5s ease-in-out infinite;
+    }
+
+    /* ================================================================
+       TOOLTIP
+    ================================================================ */
+    .seat-tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(28, 20, 8, 0.95);
+      color: var(--gold-light);
+      border: 1px solid rgba(201, 168, 76, 0.28);
+      border-radius: 8px;
+      padding: 10px 14px;
+      min-width: 148px;
+      max-width: 200px;
+      font-size: 0.68rem;
+      line-height: 1.6;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      word-break: break-word;
+      white-space: normal;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38);
+      z-index: 100;
+    }
+    .seat-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: rgba(28, 20, 8, 0.95);
+    }
+
+    /* Flip tooltip below for seats in the upper half */
+    .seat.tip-below .seat-tooltip {
+      bottom: auto;
+      top: calc(100% + 10px);
+    }
+    .seat.tip-below .seat-tooltip::after {
+      top: auto;
+      bottom: 100%;
+      border-top-color: transparent;
+      border-bottom-color: rgba(28, 20, 8, 0.95);
+    }
+
+    .seat:hover .seat-tooltip { opacity: 1; visibility: visible; }
+
+    .tt-group { font-weight: 600; color: #FFFFFF; margin-bottom: 3px; font-size: 0.7rem; }
+    .tt-guest { color: var(--gold-light); margin-bottom: 3px; }
+    .tt-note  { color: var(--gold); font-style: italic; font-size: 0.65rem; }
+
+    /* ================================================================
+       STATE MESSAGES  (loading / error)
+    ================================================================ */
+    .state-msg {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .spinner {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 14px;
+    }
+    .loading-text { color: var(--text-light); font-size: 0.85rem; letter-spacing: 0.08em; }
+    .error-text   { color: #AA3030; font-size: 0.88rem; margin-bottom: 12px; }
+    .config-box {
+      display: inline-block;
+      text-align: left;
+      margin-top: 16px;
+      padding: 18px 22px;
+      background: rgba(201, 168, 76, 0.07);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      max-width: 520px;
+      font-size: 0.75rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+    }
+    .config-box strong { color: var(--text-dark); }
+    .config-box code {
+      background: rgba(201, 168, 76, 0.16);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      color: var(--gold-dark);
+    }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    .site-footer {
+      text-align: center;
+      padding: 22px;
+      border-top: 1px solid var(--cream-mid);
+      color: var(--text-light);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      font-weight: 300;
+    }
+
+    /* ================================================================
+       ANIMATIONS
+    ================================================================ */
+    /* ================================================================
+       GUEST SUMMARY BAR
+    ================================================================ */
+    .guest-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      max-width: 640px;
+      margin: 28px auto 0;
+      padding: 18px 28px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .guest-summary:empty { display: none; }
+    .gs-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .gs-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--gold-dark);
+      line-height: 1;
+    }
+    .gs-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    .gs-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--border);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes tableGlow {
+      0%,  100% {
+        box-shadow:
+          0 0 20px rgba(201, 168, 76, 0.45),
+          0 0 0 6px rgba(201, 168, 76, 0.10),
+          0 8px 32px rgba(140, 100, 30, 0.16);
+      }
+      50% {
+        box-shadow:
+          0 0 40px rgba(201, 168, 76, 0.78),
+          0 0 0 10px rgba(201, 168, 76, 0.15),
+          0 16px 48px rgba(140, 100, 30, 0.22);
+      }
+    }
+
+    @keyframes seatPulse {
+      0%,  100% { box-shadow: 0 4px 14px rgba(160, 120, 40, 0.42); }
+      50%        { box-shadow: 0 4px 26px rgba(160, 120, 40, 0.76); }
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 480px) {
+      .site-header          { padding: 40px 16px 28px; }
+      #tablesGrid           { grid-template-columns: 1fr; gap: 28px; }
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      #tablesGrid           { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="site-header">
+    <span class="header-ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
+    <h1>Wedding Seating Map</h1>
+    <p class="venue-name">Capella Bangkok</p>
+    <div class="header-rule"><span class="gem">◆</span></div>
+  </header>
+
+  <!-- ============================================================
+       SEARCH
+  ============================================================ -->
+  <section class="search-section" aria-label="Guest search">
+    <div class="search-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="search" id="searchInput"
+             placeholder="Search your name…"
+             autocomplete="off"
+             aria-label="Search guest by name" />
+      <button id="clearBtn" aria-label="Clear search">✕</button>
+    </div>
+    <p id="searchResult" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- ============================================================
+       LEGEND
+  ============================================================ -->
+  <div class="legend" role="list" aria-label="Seat type legend">
+    <div class="legend-item" role="listitem">
+      <span class="legend-pill regular"></span><span>Guest</span>
+    </div>
+    <div class="legend-item" role="listitem">
+      <span class="legend-pill vip"></span><span>VIP Guest</span>
+    </div>
+    <div class="legend-item" role="listitem">
+      <span class="legend-pill found"></span><span>Search Match</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       GUEST COUNT SUMMARY
+  ============================================================ -->
+  <div id="guestSummary" class="guest-summary" aria-live="polite"></div>
+
+  <!-- ============================================================
+       DIVIDER
+  ============================================================ -->
+  <div class="divider" aria-hidden="true">
+    <div class="divider-line left"></div>
+    <span class="divider-gem">◆</span>
+    <div class="divider-line right"></div>
+  </div>
+
+  <!-- ============================================================
+       SEATING MAP
+  ============================================================ -->
+  <main class="tables-container">
+    <div id="tablesGrid" role="region" aria-label="Seating arrangements">
+      <div class="state-msg">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="loading-text">Preparing your seating arrangements…</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    ✦ &nbsp; With Love &nbsp; ✦
+  </footer>
+
+  <!-- ============================================================
+       SCRIPT
+  ============================================================ -->
+  <script>
+    // ============================================================
+    //  CONFIGURATION
+    //  1. Replace 'YOUR_SPREADSHEET_ID' with your Google Sheet ID
+    //     (found in the URL: /spreadsheets/d/SHEET_ID/edit)
+    //  2. Ensure Sheet is public: Share → Anyone with the link → Viewer
+    //  3. The sheet tab must match sheetName below  ("Guests")
+    // ============================================================
+    const CONFIG = {
+      spreadsheetId : '17i_1OYdcUEbfB7KaT8VI25Mzz8S_f7smuMGl-_qmFGw',
+      sheetName     : 'Guests',
+      totalTables   : 20,
+      maxSeats      : 10
+    };
+
+    // ── Layout constants ─────────────────────────────────────────
+    const CARD   = 320;          // card div width & height (px)
+    const CX     = CARD / 2;     // center x
+    const CY     = CARD / 2;     // center y
+    const T_R    = 76;           // table circle radius (px)
+    const O_R    = 125;          // seat orbit radius (px)
+
+    // ============================================================
+    //  GOOGLE SHEETS  →  JSONP  (works from file:// and http://)
+    //  Uses script-tag injection to bypass CORS restrictions.
+    // ============================================================
+    function fetchGuests () {
+      return new Promise((resolve, reject) => {
+        const cbName = '__gseat_' + Date.now();
+        const script = document.createElement('script');
+        const timer  = setTimeout(() => {
+          cleanup();
+          reject(new Error('Request timed out after 10 s — check your network and that the sheet is public.'));
+        }, 10000);
+
+        function cleanup () {
+          clearTimeout(timer);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = function (data) {
+          cleanup();
+          try { resolve(parseSheetData(data)); }
+          catch (e) { reject(e); }
+        };
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('Could not reach Google Sheets — make sure the sheet is public (Share → Anyone with the link → Viewer).'));
+        };
+
+        script.src =
+          `https://docs.google.com/spreadsheets/d/${CONFIG.spreadsheetId}` +
+          `/gviz/tq?tqx=responseHandler:${cbName}&sheet=${encodeURIComponent(CONFIG.sheetName)}`;
+
+        document.head.appendChild(script);
+      });
+    }
+
+    function parseSheetData (data) {
+      if (!data.table || !data.table.rows)
+        throw new Error('Unexpected response format from Google Sheets.');
+
+      // Map column labels → indices (case-insensitive, space-insensitive)
+      const norm  = s  => String(s).toLowerCase().replace(/\s+/g, '');
+      const cols  = (data.table.cols || []).map(c => norm(c.label || ''));
+      const idx   = name => { const i = cols.indexOf(norm(name)); return i >= 0 ? i : null; };
+
+      const iGroup = idx('GroupName')   ?? 0;
+      const iTable = idx('TableNumber') ?? 1;
+      const iTName = idx('TableName')   ?? null;
+      const iGuest = idx('GuestName')   ?? (iTName != null ? 3 : 2);
+      const iCount = idx('GuestCount')  ?? (iTName != null ? 4 : 3);
+      const iNote  = idx('Note')        ?? (iTName != null ? 5 : 4);
+
+      const cell = (row, i) => (i != null && row.c?.[i]) ? row.c[i].v : null;
+
+      return data.table.rows
+        .filter(row => cell(row, iTable) != null)
+        .map(row => ({
+          groupName  : String(cell(row, iGroup) ?? '').trim(),
+          tableNumber: String(cell(row, iTable) ?? '').trim(),
+          tableName  : String(cell(row, iTName) ?? '').trim(),
+          guestName  : String(cell(row, iGuest) ?? '').trim(),
+          guestCount : (cell(row, iCount) != null && cell(row, iCount) !== '') ? Number(cell(row, iCount)) : null,
+          note       : String(cell(row, iNote)  ?? '').trim()
+        }));
+    }
+
+    // ============================================================
+    //  DATA HELPERS
+    // ============================================================
+    function groupByTable (guests) {
+      return guests.reduce((acc, g) => {
+        (acc[g.tableNumber] ??= []).push(g);
+        return acc;
+      }, {});
+    }
+
+    /** Expand GuestCount ≥ 2 into individual seat records; cap at maxSeats. */
+    function expandSeats (guests) {
+      const seats = [];
+      for (const g of guests) {
+        if (seats.length >= CONFIG.maxSeats) break;
+        seats.push({ ...g, displayName: g.guestName, isCompanion: false });
+        if (g.guestCount != null && g.guestCount >= 2 && seats.length < CONFIG.maxSeats)
+          seats.push({ ...g, displayName: `${g.guestName} +1`, isCompanion: true });
+      }
+      return seats;
+    }
+
+    // ============================================================
+    //  SECURITY – HTML escape
+    // ============================================================
+    function esc (s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // ============================================================
+    //  BUILD SEAT ELEMENT
+    // ============================================================
+    function buildSeat (seat, index, total) {
+      const angle   = (2 * Math.PI / total) * index - Math.PI / 2;
+      const x       = CX + O_R * Math.cos(angle);
+      const y       = CY + O_R * Math.sin(angle);
+      const isVIP   = /vip/i.test(seat.note || '');
+      const isAbove = y < CY;   // seat in upper half → flip tooltip below
+
+      const div       = document.createElement('div');
+      div.className   = 'seat' + (isVIP ? ' vip' : '') + (isAbove ? ' tip-below' : '');
+      div.dataset.name = seat.guestName.toLowerCase();
+      div.style.left  = `${x.toFixed(2)}px`;
+      div.style.top   = `${y.toFixed(2)}px`;
+
+      // Pill label
+      const pill       = document.createElement('span');
+      pill.className   = 'seat-pill';
+      pill.textContent = seat.displayName;
+      pill.title       = seat.displayName;   // native fallback
+
+      // Rich tooltip
+      const tip     = document.createElement('div');
+      tip.className = 'seat-tooltip';
+      let ttHTML    = '';
+      if (seat.groupName) ttHTML += `<div class="tt-group">${esc(seat.groupName)}</div>`;
+      ttHTML += `<div class="tt-guest">${esc(seat.displayName)}</div>`;
+      if (seat.note)      ttHTML += `<div class="tt-note">${esc(seat.note)}</div>`;
+      tip.innerHTML = ttHTML;
+
+      div.appendChild(pill);
+      div.appendChild(tip);
+      return { el: div, x, y };
+    }
+
+    // ============================================================
+    //  BUILD TABLE CARD
+    // ============================================================
+    function buildTableCard (tableNum, guests) {
+      const seats       = expandSeats(guests);
+      const totalGuests = guests.reduce((s, g) => s + (g.guestCount != null ? g.guestCount : 0), 0);
+      const count       = Math.max(seats.length, 1);
+      const tableName   = guests.length ? (guests[0].tableName || '') : '';
+      const isVIPTable  = Number(tableNum) >= 1 && Number(tableNum) <= 8;
+
+      const card         = document.createElement('div');
+      card.className     = 'table-card' + (isVIPTable ? ' vip-table' : '');
+      card.dataset.table = tableNum;
+      card.style.width   = `${CARD}px`;
+      card.style.height  = `${CARD}px`;
+
+      // SVG connector lines  (drawn behind seats)
+      const ns  = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('class', 'seat-lines');
+      svg.setAttribute('width',  CARD);
+      svg.setAttribute('height', CARD);
+      svg.setAttribute('aria-hidden', 'true');
+
+      // Central table circle
+      const circle = document.createElement('div');
+      circle.className = 'table-circle';
+      Object.assign(circle.style, {
+        left  : `${CX - T_R}px`,
+        top   : `${CY - T_R}px`,
+        width : `${T_R * 2}px`,
+        height: `${T_R * 2}px`
+      });
+      if (isVIPTable) circle.classList.add('vip-table-circle');
+      circle.innerHTML = `
+        <div class="table-num">Table&nbsp;${esc(tableNum)}</div>
+        ${tableName ? `<div class="table-name-label">${esc(tableName)}</div>` : ''}
+        <div class="table-mini-rule"></div>
+        <div class="table-count">${totalGuests}&nbsp;guest${totalGuests !== 1 ? 's' : ''}</div>
+      `;
+
+      card.appendChild(svg);
+      card.appendChild(circle);
+
+      // Seats + connector lines
+      seats.forEach((seat, i) => {
+        const { el, x, y } = buildSeat(seat, i, count);
+
+        // Thin gold line from table edge to seat
+        const lineAngle  = (2 * Math.PI / count) * i - Math.PI / 2;
+        const lineX1     = (CX + T_R * Math.cos(lineAngle)).toFixed(2);
+        const lineY1     = (CY + T_R * Math.sin(lineAngle)).toFixed(2);
+        const line       = document.createElementNS(ns, 'line');
+        line.setAttribute('x1', lineX1);
+        line.setAttribute('y1', lineY1);
+        line.setAttribute('x2', x.toFixed(2));
+        line.setAttribute('y2', y.toFixed(2));
+        line.setAttribute('stroke', 'rgba(201,168,76,0.25)');
+        line.setAttribute('stroke-width', '1');
+        line.setAttribute('stroke-dasharray', '3 3');
+        svg.appendChild(line);
+
+        card.appendChild(el);
+      });
+
+      return card;
+    }
+
+    // ============================================================
+    //  RENDER ALL TABLES
+    // ============================================================
+    function renderAllTables (tableData) {
+      const grid = document.getElementById('tablesGrid');
+      grid.innerHTML = '';
+
+      let totalGuests   = 0;
+      let tablesWithGuests = 0;
+
+      for (let n = 1; n <= CONFIG.totalTables; n++) {
+        const guests = tableData[String(n)] || [];
+        const card   = buildTableCard(n, guests);
+        card.style.animationDelay = `${((n - 1) * 0.042).toFixed(3)}s`;
+        grid.appendChild(card);
+
+        const t = guests.reduce((s, g) => s + (g.guestCount != null ? g.guestCount : 0), 0);
+        totalGuests += t;
+        if (t > 0) tablesWithGuests++;
+      }
+
+      // Update summary bar
+      const summary = document.getElementById('guestSummary');
+      if (summary && totalGuests > 0) {
+        summary.innerHTML = `
+          <div class="gs-stat">
+            <span class="gs-num">${totalGuests}</span>
+            <span class="gs-label">Total Guests</span>
+          </div>
+          <div class="gs-divider"></div>
+          <div class="gs-stat">
+            <span class="gs-num">${tablesWithGuests}</span>
+            <span class="gs-label">Tables in Use</span>
+          </div>
+          <div class="gs-divider"></div>
+          <div class="gs-stat">
+            <span class="gs-num">${CONFIG.totalTables - tablesWithGuests}</span>
+            <span class="gs-label">Tables Available</span>
+          </div>
+        `;
+      } else if (summary) {
+        summary.innerHTML = '';
+      }
+    }
+
+    // ============================================================
+    //  SEARCH
+    // ============================================================
+    function initSearch () {
+      const input    = document.getElementById('searchInput');
+      const clearBtn = document.getElementById('clearBtn');
+      const resultEl = document.getElementById('searchResult');
+
+      function clearHighlights () {
+        document.querySelectorAll('.table-card.highlighted')
+                .forEach(el => el.classList.remove('highlighted'));
+        document.querySelectorAll('.seat.found')
+                .forEach(el => el.classList.remove('found'));
+      }
+
+      function search (raw) {
+        clearHighlights();
+        resultEl.className   = '';
+        resultEl.textContent = '';
+        clearBtn.classList.toggle('show', raw.length > 0);
+
+        const q = raw.trim().toLowerCase();
+        if (!q) return;
+
+        let firstCard  = null;
+        let matchCount = 0;
+
+        document.querySelectorAll('.seat').forEach(seat => {
+          if (seat.dataset.name && seat.dataset.name.includes(q)) {
+            seat.classList.add('found');
+            const card = seat.closest('.table-card');
+            if (card) {
+              card.classList.add('highlighted');
+              matchCount++;
+              if (!firstCard) firstCard = card;
+            }
+          }
+        });
+
+        if (firstCard) {
+          firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          resultEl.textContent = matchCount === 1
+            ? `Found at Table ${firstCard.dataset.table}`
+            : `${matchCount} matches found`;
+        } else {
+          resultEl.textContent = 'Guest not found';
+          resultEl.className   = 'not-found';
+        }
+      }
+
+      input.addEventListener('input', e => search(e.target.value));
+      clearBtn.addEventListener('click', () => { input.value = ''; search(''); input.focus(); });
+    }
+
+    // ============================================================
+    //  ERROR BANNER  (non-destructive — tables stay visible)
+    // ============================================================
+    function showFetchError (msg) {
+      const existing = document.getElementById('fetchErrorBanner');
+      if (existing) existing.remove();
+      const banner = document.createElement('div');
+      banner.id = 'fetchErrorBanner';
+      banner.style.cssText = [
+        'grid-column:1/-1',
+        'text-align:center',
+        'padding:14px 20px',
+        'background:rgba(170,48,48,0.07)',
+        'border:1px solid rgba(170,48,48,0.22)',
+        'border-radius:10px',
+        'color:#AA3030',
+        'font-size:0.78rem',
+        'letter-spacing:0.04em',
+        'margin-bottom:4px',
+        'line-height:1.65'
+      ].join(';');
+      banner.innerHTML = `<strong>⚠️ Could not load guest data</strong><br>${esc(msg)}`;
+      const grid = document.getElementById('tablesGrid');
+      grid.insertBefore(banner, grid.firstChild);
+    }
+
+    // ============================================================
+    //  INIT
+    // ============================================================
+    async function init () {
+      initSearch();
+
+      // Always render all 20 tables immediately (empty seats while loading)
+      renderAllTables({});
+
+      if (CONFIG.spreadsheetId === 'YOUR_SPREADSHEET_ID') {
+        showFetchError('Please set your Google Sheets ID in the CONFIG section of the script.');
+        return;
+      }
+
+      try {
+        const guests    = await fetchGuests();
+        const tableData = groupByTable(guests);
+        renderAllTables(tableData);  // re-render with real guest data
+      } catch (err) {
+        console.error('[Seating Map]', err);
+        showFetchError(err.message);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
